@@ -1,7 +1,7 @@
 import javax.swing.*;
 
-public class main {
-    public static void main(String[] args) {
+public class Main {
+    public static void Main(String[] args) {
         // Create the main window
 
         int sizeX = 700;
