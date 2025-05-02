@@ -16,25 +16,21 @@ public class Turing {
     };
     private static final int[] finalStates = {0, 0, 1, 1, 0, 1, 0, 0, 1, 0};
 
-    public Turing(){
-
-    }   
-
     public String Validate(String word){
         state = 0;
-        System.out.println("banaana");
+
         for(int i = 0; i < word.length(); i++){
             int j;
             for(j = 0; j < chars.length; j++){
-                System.out.print(j);
                 if(word.charAt(i) == chars[j]){break;}                
             }      
-            System.out.print(j);     
-
-            //state = table[state][0];
+            state = table[state][j];
         }
-
-
-        return "";
+        if(finalStates[state] == 1){
+            return "sentença válida: ";
+        }
+        else{
+            return "ERRO: sentença inválida: ";
+        }
     }
 }

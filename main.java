@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class main {
@@ -36,20 +37,40 @@ public class main {
         });
         frame.add(cleanButton);
 
-        JButton analyzeButton = new JButton("Click Me2");
+        JButton analyzeButton = new JButton("Analisar");
         analyzeButton.setBounds(sizeX-260, 150, 100, 30);
-        analyzeButton.addActionListener(e -> {
-            String tempWords = inputBox.getText();
+        analyzeButton.addActionListener(e -> {            
+            String tokens[] = inputBox.getText().split("(?<=[+\\-*/])|(?=[+\\-*/])|[ \t\n]+");
+            ArrayList<String> tokenClassification = new ArrayList<>();
 
-            //separa strings em strings menores
-            Turing porra = new Turing();
-            porra.Validate("abcdz");
+            Turing validator = new Turing();
 
+            for (String token : tokens) {
+                if(token.equals("")){break;}
+                if(token.charAt(0) == '*' || token.charAt(0) == '+' || token.charAt(0) == '/' || token.charAt(0) == '-' ){
+                    tokenClassification.add("operador aritmético: ");
+                }else{
+                    if(token.charAt(0) != 'a' & token.charAt(0) != 'b' & token.charAt(0) != 'c' & token.charAt(0) != 'd' & token.charAt(0) != 'e'){
+                        tokenClassification.add("ERRO: símbolo(s) inválido(s): ");
+                    }
+                    else{
+                        tokenClassification.add(validator.Validate(token));
+                    }
+                }
+            }
+            String outputString = "";
+
+            for(int i = 0; i < tokens.length; i++){
+                outputString += tokenClassification.get(i) + tokens[i] + "\n";
+            }
             
-
             //String input = inputBox.getText();
             //outputBox.setText("You typed: " + input);
-        });
+
+            outputBox.setText(outputString);
+        }           
+                 
+        );
         frame.add(analyzeButton);
 
         frame.setVisible(true);
