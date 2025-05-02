@@ -1,7 +1,7 @@
 import javax.swing.*;
 
-public class Main {
-    public static void Main(String[] args) {
+public class main {
+    public static void main(String[] args) {
         // Create the main window
 
         int sizeX = 700;
@@ -39,8 +39,16 @@ public class Main {
         JButton analyzeButton = new JButton("Click Me2");
         analyzeButton.setBounds(sizeX-260, 150, 100, 30);
         analyzeButton.addActionListener(e -> {
-            String input = inputBox.getText();
-            outputBox.setText("You typed: " + input);
+            String tempWords = inputBox.getText();
+
+            //separa strings em strings menores
+            Turing porra = new Turing();
+            porra.Validate("abcdz");
+
+            
+
+            //String input = inputBox.getText();
+            //outputBox.setText("You typed: " + input);
         });
         frame.add(analyzeButton);
 
