@@ -40,7 +40,7 @@ public class main {
         JButton analyzeButton = new JButton("Analisar");
         analyzeButton.setBounds(sizeX-260, 150, 100, 30);
         analyzeButton.addActionListener(e -> {            
-            String tokens[] = inputBox.getText().split("(?<=[+\\-*/])|(?=[+\\-*/])|[ \t\n]+");
+            ArrayList<String> tokens = splitString(inputBox.getText());           
             ArrayList<String> tokenClassification = new ArrayList<>();
 
             Turing validator = new Turing();
@@ -60,13 +60,9 @@ public class main {
             }
             String outputString = "";
 
-            for(int i = 0; i < tokens.length; i++){
-                outputString += tokenClassification.get(i) + tokens[i] + "\n";
-            }
-            
-            //String input = inputBox.getText();
-            //outputBox.setText("You typed: " + input);
-
+            for(int i = 0; i < tokens.size(); i++){
+                outputString += tokenClassification.get(i) + tokens.get(i) + "\n";
+            }    
             outputBox.setText(outputString);
         }           
                  
@@ -74,5 +70,30 @@ public class main {
         frame.add(analyzeButton);
 
         frame.setVisible(true);
+    }
+
+    public static ArrayList<String> splitString(String input){  
+        ArrayList<String> tokens = new ArrayList<>();  
+        String token = "";
+        for (char tokenChar : input.toCharArray()){            
+            if (tokenChar == '*' || tokenChar == '+' || tokenChar == '/' || tokenChar == '-' ){
+                if(!token.isEmpty()){
+                    tokens.add(token);
+                    token = "";
+                }
+                tokens.add(Character.toString(tokenChar));
+            }
+            else if (tokenChar == ' ' || tokenChar == '\n' || tokenChar == '\t'){
+                if(!token.isEmpty()){
+                    tokens.add(token);
+                    token = "";
+                }
+            }
+            else {
+                token += tokenChar;
+            }
+        }
+        if(!token.isEmpty())tokens.add(token);
+        return tokens;
     }
 }
